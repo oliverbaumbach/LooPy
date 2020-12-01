@@ -134,7 +134,7 @@ class Simulate(Interpreter):
 
         # RESULT BOX
         screen.addstr(y_margin + 1, x_margin, "┏━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━┓")
-        screen.addstr(y_margin + 2, x_margin, "┃ REGISTER │       WERT       ┃")
+        screen.addstr(y_margin + 2, x_margin, "┃ REGISTER │      VALUE       ┃")
         screen.addstr(y_margin + 3, x_margin, "┠──────────┼──────────────────┨")
         screen.addstr(y_margin + 4, x_margin, "┣╾ ")
         screen.addstr(f"x0", curses.A_BOLD)
