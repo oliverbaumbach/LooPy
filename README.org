@@ -57,9 +57,11 @@ You can run loopy on a program with
   python3 loopy.py [options] [program file] [variable assignments] 
 #+END_SRC 
 
-=[program file]=: is the text file in which you have saved your loop program. 
-=[variable assignments]=: are expressions of the form <int>=<int>, e.g. 1=12, where the first number is the variable index to be assigned, and the second number is the value to assign to it. 
-=[options]=: LooPy currently has the following options 
+=[program file]= is the text file in which you have saved your loop program. 
+
+=[variable assignments]= are expressions of the form <int>=<int>, e.g. 1=12, where the first number is the variable index to be assigned, and the second number is the value to assign to it. 
+
+=[options]= LooPy currently has the following options 
 - =--no_render=: skip TUI, directly output value in x_0 
 - =--all_vals=: output all referenced variables as TSV instead of only x_0    
 
