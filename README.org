@@ -82,12 +82,12 @@ You can control program execution using several keys:
 
 | Key |         | Behaviour                        |
 |-----+---------+----------------------------------|
-| n   | Next    | Step forward to next instruction |
-| s   | to Step | Skip forward to n-th instruction |
-| l   | to Line | Skip forward to n-th line        |
-| e   | to End  | Skip forward to results screen   |
+| *N* | Next    | Step forward to next instruction |
+| *S* | to Step | Skip forward to n-th instruction |
+| *L* | to Line | Skip forward to n-th line        |
+| *E* | to End  | Skip forward to results screen   |
 
 **** Result Screen
-Once the program has finishd executing, LooPy will display a results screen showing the final output and variable values. 
+Once the program has finished executing, LooPy will display a results screen showing the final output and variable values. 
 
 [[file:result_screen.png]]
