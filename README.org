@@ -5,7 +5,10 @@ LooPy is a terminal program for stepwise simulation of basic LOOP/WHILE programs
 LooPy only requires Python 3.7+ and the [[https://pypi.org/project/lark/][Lark]] parser library 
 
 ** Writing LOOP Programs for LooPy 
-The program syntax LooPy uses is designed to closely mirror that of the formal notation for LOOP programs. It supports the basic operations of addition, subtraction, looping and concatenation, as well as convenience operations that could be simulated by this basic set. 
+The program syntax LooPy uses is designed to closely mirror that of the formal notation for LOOP programs. It supports the basic operations of addition, subtraction, looping and concatenation, as well as convenience operations that can be simulated by this basic set. 
+
+[[https://asciinema.org/a/376433][https://asciinema.org/a/376433.png]]
+Asciinema Preview
 
 #+BEGIN_SRC text
   x999 := 1;     # x<n> is variable n 
@@ -46,7 +49,7 @@ The program syntax LooPy uses is designed to closely mirror that of the formal n
 
 If the input program is malformed, LooPy will output an error message pointing to where the parsing failed. 
 
-** Simulating LOOP Programs 
+* *  Simulating LOOP Programs 
 
 [[file:main_screen.png]]
 
