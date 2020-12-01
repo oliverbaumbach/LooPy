@@ -1,4 +1,5 @@
 * LooPy 
+[[file:logo.png]]
 LooPy is a terminal program for stepwise simulation of basic LOOP/WHILE programs found in theoretical computer science. It is written purely in python. 
 
 [[https://asciinema.org/a/376433][https://asciinema.org/a/376433.png]]
