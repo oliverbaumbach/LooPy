@@ -48,6 +48,7 @@ If the input program is malformed, LooPy will output an error message pointing t
 
 ** Simulating LOOP Programs 
 
+[[file:main_screen.png]]
 
 On the left, there's the register column which lists all variables which have been referenced, as well as their current values. Variables which were changed during the last instruction are highlighted in bold. 
 
@@ -66,3 +67,4 @@ You can control program execution using several keys:
 
 Once the program has finishd executing, LooPy will display a results screen showing the final output and variable values. 
 
+[[file:result_screen.png]]
