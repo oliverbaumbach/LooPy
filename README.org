@@ -62,11 +62,12 @@ You can run loopy on a program with
 =[variable assignments]= are expressions of the form <int>=<int>, e.g. 1=12, where the first number is the variable index to be assigned, and the second number is the value to assign to it. 
 
 =[options]= LooPy currently has the following options 
-- =--no_render=: skip TUI, directly output value in x_0 
-- =--all_vals=: output all referenced variables as TSV instead of only x_0    
+- =--no_render= skip TUI, directly output value in x_0 
+- =--all_vals= output all referenced variables as TSV instead of only x_0    
 
 
 *** Views 
+**** Program Screen
 [[file:main_screen.png]]
 
 On the left, there's the register column which lists all variables which have been referenced, as well as their current values. Variables which were changed during the last instruction are highlighted in bold. 
@@ -84,6 +85,7 @@ You can control program execution using several keys:
 | l   | to Line | Skip forward to n-th line        |
 | e   | to End  | Skip forward to results screen   |
 
+**** Result Screen
 Once the program has finishd executing, LooPy will display a results screen showing the final output and variable values. 
 
 [[file:result_screen.png]]
