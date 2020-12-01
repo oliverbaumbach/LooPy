@@ -80,12 +80,12 @@ At the top right, the number of steps taken and the current instruction type are
 
 You can control program execution using several keys: 
 
-| Key |         | Behaviour                        |
-|-----+---------+----------------------------------|
-| *N* | Next    | Step forward to next instruction |
-| *S* | to Step | Skip forward to n-th instruction |
-| *L* | to Line | Skip forward to n-th line        |
-| *E* | to End  | Skip forward to results screen   |
+| Key |         | Behaviour                                             |
+|-----+---------+-------------------------------------------------------|
+| *N* | Next    | Step forward to next instruction                      |
+| *S* | to Step | Skip forward to n-th instruction (prompts for number) |
+| *L* | to Line | Skip forward to n-th line (prompts for number)        |
+| *E* | to End  | Skip forward to results screen                        |
 
 **** Result Screen
 Once the program has finished executing, LooPy will display a results screen showing the final output and variable values. 
