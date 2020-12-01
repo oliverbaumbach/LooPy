@@ -1,0 +1,75 @@
+LooPy ist ein Terminalprogram zur schrittweisen Simulierung von LOOP und WHILE Programmen aus der Theoretischen Informatik. 
+
+* Anforderungen
+LooPy benötigt lediglich Python 3.8+ und die [[https://pypi.org/project/lark/][Lark]] Parserbibliothek. 
+
+* Programme schreiben
+LooPy hält sich so nah wie möglich an der formellen Schreibweise für LOOP Programme, welche sich dadurch 1:1 Übersetzen lassen. 
+
+
+
+LooPy is a terminal program for stepwise simulation of basic LOOP/WHILE programs found in theoretical computer science. It is written purely in python. 
+
+* Requirements 
+LooPy only requires Python 3.8+ and the [[https://pypi.org/project/lark/][Lark]] parser library 
+
+* Writing LOOP Programs 
+The program syntax LooPy uses is designed to closely mirror that of the formal notation for LOOP programs. It supports the basic operations of addition, subtraction, looping and concatenation, as well as convenience operations that could be simulated by this basic set. 
+
+#+BEGIN_SRC text
+  x999 := 1;     # x<n> is variable n 
+  X0   := 2;     # case insensitive    
+ 
+  x1 := 5;       # Assign Constant
+  x2 := x1;      # Assign Variabe
+
+  x1 := x1 + 5;  # Add Constant
+  x2 := x1 + x2; # Add Variable
+
+  x1 := x1 - 5;  # Subtract Constant
+  x2 := x1 - x2; # Subtract Variable
+
+  x1 := x1 * 5;  # Multiply by Constant
+  x2 := x1 * x2; # Multiply by Variable
+
+  # Analogue: Whole Number Division, Modulo
+  x1 := x1 / 2;  
+  x1 := x1 % 2;
+
+  LOOP x1 DO x1 := x1 + 5 END; # Loop
+
+  LOOP x1 DO                   # Nested Loop
+    LooP x1 dO                 # case insensitive
+      x1                       
+         := x1 
+ * 2;
+    eNd
+  END
+
+  WHILE x1 != 0 DO x1 := x1 - 1; x2 := x2 + 5 END; # While Loop 
+
+  x0 := x2       # ! No trailing ';' for last statement
+
+  # Comment      # Comment 
+#+END_SRC
+
+If the input program is malformed, LooPy will output an error message pointing to where the parsing failed. 
+
+* Simulating LOOP Programs 
+
+
+On the left, there's the register column which lists all variables which have been referenced, as well as their current values. Variables which were changed during the last instruction are highlighted in *bold*. 
+
+To the right of that is the program view, which shows the current program, with the currently executing statement highlighted. 
+
+At the top right, the number of steps taken and the current instruction type are shown. At the bottom right is the current page number. LooPy will automatically switch pages as the execution moves past the border of the current page. 
+
+You can control program execution using several keys: 
+
+| n | Next    | Step forward to next instruction |
+| s | to Step | Skip forward to n-th instruction |
+| l | to Line | Skip forward to n-th line        |
+| e | to End  | Skip forward to results screen   |
+
+Once the program has finishd executing, LooPy will display a results screen showing the final output and variable values. 
+
