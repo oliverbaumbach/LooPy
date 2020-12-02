@@ -1,0 +1,16 @@
+x0 := 0;
+x1 := 7;
+x2 := 5;
+
+LOOP x1 DO x0 := x0 + 1 END; #Add 1 x1 times
+LOOP x2 DO x0 := x0 + 1 END; #Add 1 x2 times
+
+x0 := 0;
+x0 := x1 + x2; 
+
+x0 := 0;
+LOOP x1 DO x0 := x0 + 1 END; #Add 1 x1 times 
+LOOP x2 DO x0 := x0 - 1 END; #Subtract 1 x2 times 
+
+x0 := 0; 
+x0 := x1 - x2; 
