@@ -33,11 +33,11 @@ while_ : "WHILE"i cond "DO"i program "END"i
 
 if_ : "IF"i cond "DO"i program "END"i 
 cond : var "="  (const | var) -> eq 
-     | var "!=" (const | var) -> neq 
+     | var "!=" (const | var) -> ne
      | var ">"  (const | var) -> gt 
-     | var ">=" (const | var) -> gte 
+     | var ">=" (const | var) -> ge 
      | var "<"  (const | var) -> lt 
-     | var "<=" (const | var) -> lte 
+     | var "<=" (const | var) -> le 
 
 
 
@@ -210,14 +210,6 @@ class Simulate(Interpreter):
         for _ in range(self.resolve(var)):
             self.visit(program)
 
-    def while_(self, tree):
-        """
-        Visits child program until value in var is zero 
-        """
-        cond, program = tree.children
-        while self.visit(cond):
-            self.visit(program)
-
     def concat(self, tree):
         """
         Visits all child programs in order
@@ -225,15 +217,38 @@ class Simulate(Interpreter):
         for program in tree.children:
             self.visit(program)
 
+    def while_(self, tree):
+        """
+        Visits child program while conditional is true
+        """
+        cond, program = tree.children
+        while self.cond(cond):
+            self.visit(program)
+
     def if_(self, tree):
-        pass
+        """
+        Visits child program if conditional is true 
+        """
+        cond, program = tree.children
+        if self.cond(cond):
+            self.visit(program) 
 
     def cond(self, tree):
-        var1, var2 
+        """
+        Evaluate conditional statement
+        """
+        var1, var2 = tree.children
+        op = {"eq": operator.eq,
+              "ne": operator.ne,
+              "gt": operator.gt,
+              "ge": operator.ge,
+              "lt": operator.lt,
+              "le": operator.le}[tree.data]
+        return op(self.resolve(var1), self.resolve(var2))
         
     def visit(self, tree):
         # Shim to tie tree traversal to ncurses render loop
-        if tree.data != "concat":
+        if tree.data not in {"concat"}:
             self.step += 1
             if (self.step >= self._goto_step and
                 tree.meta.line > self._goto_line and
@@ -250,6 +265,16 @@ class Simulate(Interpreter):
         max_y, max_x = screen.getmaxyx()
         
         screen.clear()
+
+
+        # OPTIONS 
+        OPTIONS = ("[N]ext",
+                   "[S]tep, skip to",
+                   "[L]ine, skip to",
+                   "[E]nd, skip to",
+                   "[Q]uit")
+        for y, option in enumerate(OPTIONS, start = max_y - len(OPTIONS)):
+            screen.addstr(y, 0, option, curses.A_DIM)
         
         # HEADER 
         screen.addstr(0,0, "   REGISTERS    ┃ L# ┃ PROGRAM")
@@ -258,8 +283,9 @@ class Simulate(Interpreter):
         screen.addstr(1,0, "━━━━━━━━━━━━━━━━╋━━━━╇" + "━"*(max_x - 22))
         
         # REGISTER VALUES
-        y = itertools.count() 
-        for reg, val in sorted(self.register.items()):
+        y = itertools.count()
+        registers = sorted(self.register.items())[:max_y-3]
+        for reg, val in registers:
             screen.addstr(2 + next(y), 0,
                           f"[x{reg}]".ljust(6) +
                           (f" = {val:^7}" if val < 10e7 else f" = {val:^7.0e}"),
@@ -269,7 +295,7 @@ class Simulate(Interpreter):
             screen.addstr("┃")
         self.register.diff.clear()
             
-        screen.addstr(len(self.register) + 2, 0, "────────────────┚")
+        screen.addstr(len(registers) + 2, 0, "────────────────┚")
 
         # DECORATION 
         lines = TU_LOGO.splitlines()
@@ -321,13 +347,7 @@ class Simulate(Interpreter):
             screen.addstr(y, 21, "│")
         screen.addstr(max_y - 1, 21, "┆")
 
-        OPTIONS = ("[N]ext",
-                   "[S]tep, skip to",
-                   "[L]ine, skip to",
-                   "[E]nd, skip to",
-                   "[Q]uit")
-        for y, option in enumerate(OPTIONS, start = max_y - len(OPTIONS)):
-            screen.addstr(y, 0, option, curses.A_DIM)
+        
 
         screen.addnstr(max_y -1, 22, " LooPy terminal \"LOOP/WHILE Program\" simulator",
                        max_x - 23, curses.A_DIM)

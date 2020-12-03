@@ -43,7 +43,15 @@ The program syntax LooPy uses is designed to closely mirror that of the formal n
     eNd
   END
 
+  IF x1 = 0 DO x1 := 5 END    # If conditional 
+  #  x1 != 0 
+  #  x1 < 1 
+  #  x1 <= 1 
+  #  x1 > 1 
+  #  x1 >= 1 
+
   WHILE x1 != 0 DO x1 := x1 - 1; x2 := x2 + 5 END; # While Loop 
+  WHILE x7 <= 5 DO x7 := x7 + 1 END;               # Different conditional
 
   x0 := x2       # ! No trailing ';' for last statement
 

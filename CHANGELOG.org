@@ -1,0 +1,19 @@
+* 0.1 (2020-12-01) 
+Released first version 
+
+** Features: 
+- Assignment Operations 
+- Binary Operations (add, sub, mul, div, mod) 
+- LOOP constructs 
+- WHILE != 0 constructs 
+- Program View 
+- Active Statement Highlighting 
+- Results View 
+
+* 0.1.1 (2020-12-03) 
+Some more features that didn't make it into the first release. 
+** Features 
+- Conditionals (\=, !=, >, >=, <, <=) 
+- WHILE cond construct 
+- IF cond construct 
+- Fix for long register lists
