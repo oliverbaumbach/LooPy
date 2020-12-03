@@ -1,9 +1,11 @@
 #!/usr/bin/python3
+
 import curses 
 import random
 import itertools
 import argparse
 import sys
+import operator 
 
 from collections import defaultdict
 
@@ -14,7 +16,8 @@ GRAMMAR = r"""
 ?program : asn | add | sub | mul | div | mod 
          | concat 
          | loop 
-         | lwhile
+         | while_
+         | if_ 
 
 asn : var ":=" (const | var) 
 add : var ":=" var "+" (const | var) 
@@ -26,7 +29,17 @@ mod : var ":=" var "%" (const | var)
 concat : program (";" program)+
 
 loop : "LOOP"i var "DO"i program "END"i
-lwhile : "WHILE"i var "!=" "0" "DO"i program "END"i 
+while_ : "WHILE"i cond "DO"i program "END"i 
+
+if_ : "IF"i cond "DO"i program "END"i 
+cond : var "="  (const | var) -> eq 
+     | var "!=" (const | var) -> neq 
+     | var ">"  (const | var) -> gt 
+     | var ">=" (const | var) -> gte 
+     | var "<"  (const | var) -> lt 
+     | var "<=" (const | var) -> lte 
+
+
 
 var : "x"i NUMBER
 const : NUMBER 
@@ -172,40 +185,22 @@ class Simulate(Interpreter):
         """
         target, val = tree.children
         self.register[target.value] = self.resolve(val)
-        
-    def add(self, tree):
-        """
-        Addition
-        """
-        target, val1, val2 = tree.children
-        self.register[target.value] = self.resolve(val1) + self.resolve(val2)
-        
-    def sub(self, tree):
-        """
-        Subtraction 
-        """
-        target, val1, val2 = tree.children
-        self.register[target.value] = max(self.resolve(val1) - self.resolve(val2), 0)
-    def mul(self, tree):
-        """
-        Multiplication
-        """
-        target, val1, val2 = tree.children
-        self.register[target.value] = self.resolve(val1) * self.resolve(val2)
 
-    def div(self, tree):
+    def _biop(op):
         """
-        Integer Division 
+        Binary operation constructor 
         """
-        target, val1, val2 = tree.children
-        self.register[target.value] = self.resolve(val1) // self.resolve(val2) 
+        def __biop(self, tree):
+            target, val1, val2 = tree.children
+            self.register[target.value] = op(self.resolve(val1),
+                                             self.resolve(val2))
+        return __biop
 
-    def mod(self, tree):
-        """
-        Modulo
-        """ 
-        target, val1, val2 = tree.children
-        self.register[target.value] = self.resolve(val1) % self.resolve(val2)
+    add = _biop(operator.add)
+    sub = _biop(lambda a,b: max(a - b, 0))
+    mul = _biop(operator.mul)
+    div = _biop(operator.floordiv)
+    mod = _biop(operator.mod) 
 
     def loop(self, tree):
         """
@@ -215,12 +210,12 @@ class Simulate(Interpreter):
         for _ in range(self.resolve(var)):
             self.visit(program)
 
-    def lwhile(self, tree):
+    def while_(self, tree):
         """
         Visits child program until value in var is zero 
         """
-        var, program = tree.children
-        while self.resolve(var) != 0:
+        cond, program = tree.children
+        while self.visit(cond):
             self.visit(program)
 
     def concat(self, tree):
@@ -230,6 +225,12 @@ class Simulate(Interpreter):
         for program in tree.children:
             self.visit(program)
 
+    def if_(self, tree):
+        pass
+
+    def cond(self, tree):
+        var1, var2 
+        
     def visit(self, tree):
         # Shim to tie tree traversal to ncurses render loop
         if tree.data != "concat":
