@@ -95,6 +95,13 @@ You can control program execution using several keys:
 | *L* | to Line | Skip forward to n-th line (prompts for number)        |
 | *E* | to End  | Skip forward to results screen                        |
 
+***** A Note on Infinite Loops 
+As LooPy supports =WHILE= loops, it is possible to write programs that do not terminate. Whilst this is correct and corresponds to 'no result', it does get boring watching a while loop iterate forever, or to not watch by trying to skip forward to the end of the program. 
+
+This is why LooPy has a limit to the number of times a while loop may execute. It is set in the variable =MAX_ITERATIONS= and set to 1e6 by default, but this may be changed by users with really intense while loops, or much more patience than I have.  
+
+If a while loop reaches this limit, it'll break and the program will return -1, and display ⊥ as the value of x0 in the result screen. 
+
 **** Result Screen
 Once the program has finished executing, LooPy will display a results screen showing the final output and variable values. 
 

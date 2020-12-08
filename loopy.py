@@ -60,7 +60,7 @@ TU_LOGO = """
    BERLIN
 """
 
-MAX_ITERATIONS = 10e5
+MAX_ITERATIONS = 1e6
 
 class Clean(Visitor):
     """
@@ -82,10 +82,14 @@ class ObserverDefaultDict(defaultdict):
         self.diff.add(item)
         super().__setitem__(item, value)
 
-class UserAbortException(Exception):
+class LooPyException(Exception):
+    pass 
+        
+class UserAbortException(LooPyException):
     pass
 
-
+class IterationLimitReachedException(LooPyException):
+    pass 
 
 class Simulate(Interpreter):
     """
@@ -237,7 +241,7 @@ class Simulate(Interpreter):
             iteration += 1
             if iteration >= MAX_ITERATIONS:
                 self.register[0] = -1
-                break
+                raise IterationLimitReachedException() 
 
     def if_(self, tree):
         """
@@ -405,16 +409,7 @@ class Simulate(Interpreter):
             self._goto_line = -1
         # Quit
         if ch == "q":
-            sys.exit()
-
-
-
-
-
-
-
-
-
+            raise UserAbortException()
 
 
 
@@ -470,5 +465,5 @@ if __name__ == "__main__":
         # since curses is tied to simulator, it needs to be destroyed
         del simulator
         print(output)
-    except UserAbortException:
+    except LooPyException:
         pass
